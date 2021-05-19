@@ -8,6 +8,7 @@ import tech.weather.app.weather.day.WeatherDayRequest;
 import tech.weather.app.weather.now.WeatherNowParser;
 import tech.weather.settings.SettingsController;
 import tech.weather.settings.SettingsFileController;
+import tech.weather.settings.SettingsKey;
 
 import java.io.IOException;
 import java.util.*;
@@ -37,7 +38,7 @@ public class CLIController {
             case "air" -> airPollutionController(commandLine);
             case "weather" -> weatherController(commandLine);
             case "help" -> Help.generalHelp();
-            case "key" -> SettingsFileController.modifyAppId(commandLine.get("selection")); // The key will hosted in the second key (selection)
+            case "key" -> SettingsKey.modifyOpeanWeatherMapKey(commandLine.get("selection")); // The key will hosted in the second key (selection)
             case "settings" -> SettingsController.enterSettingsShell();
             case "exit" -> "Brise is closing.";
             default -> """
