@@ -1,10 +1,9 @@
 package tech.weather.settings;
 
-import tech.weather.app.tools.Screen;
+import tech.weather.tools.Screen;
 
 import java.util.Map;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 
 // Do not close Scanners!
 // Closing secondary scanners

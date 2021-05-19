@@ -1,7 +1,7 @@
 package tech.weather.app.weather.day;
 
-import tech.weather.app.tools.TempTool;
-import tech.weather.app.tools.WindTool;
+import tech.weather.tools.TempTool;
+import tech.weather.tools.WindTool;
 
 import java.util.Map;
 

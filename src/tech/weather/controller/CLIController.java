@@ -3,11 +3,10 @@ package tech.weather.controller;
 import org.json.simple.parser.ParseException;
 import tech.weather.app.air.now.AirPollutionParser;
 import tech.weather.app.hello.HelloParser;
-import tech.weather.app.help.Help;
+import tech.weather.ressource.help.Help;
 import tech.weather.app.weather.day.WeatherDayRequest;
 import tech.weather.app.weather.now.WeatherNowParser;
 import tech.weather.settings.SettingsController;
-import tech.weather.settings.SettingsFileController;
 import tech.weather.settings.SettingsKey;
 
 import java.io.IOException;

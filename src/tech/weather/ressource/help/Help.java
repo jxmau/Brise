@@ -1,4 +1,4 @@
-package tech.weather.app.help;
+package tech.weather.ressource.help;
 
 public class Help {
     public static String generalHelp(){

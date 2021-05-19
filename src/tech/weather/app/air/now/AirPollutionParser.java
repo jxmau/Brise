@@ -7,8 +7,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import tech.weather.app.tools.GPSCoordParser;
-import tech.weather.settings.SettingsFileController;
+import tech.weather.tools.GPSCoordParser;
 import tech.weather.settings.SettingsKey;
 import tech.weather.settings.SettingsLocation;
 

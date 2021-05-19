@@ -1,7 +1,5 @@
-package tech.weather.app.tools;
+package tech.weather.tools;
 
-import org.apache.maven.settings.Settings;
-import tech.weather.settings.SettingsFileController;
 import tech.weather.settings.SettingsService;
 import tech.weather.settings.SettingsUnit;
 

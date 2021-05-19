@@ -1,6 +1,4 @@
-package tech.weather.app.tools;
-
-import java.io.IOException;
+package tech.weather.tools;
 
 public class Screen {
 
