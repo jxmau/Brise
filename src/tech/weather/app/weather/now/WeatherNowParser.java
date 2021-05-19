@@ -9,6 +9,8 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import tech.weather.app.tools.GPSCoordParser;
 import tech.weather.settings.SettingsFileController;
+import tech.weather.settings.SettingsKey;
+import tech.weather.settings.SettingsLocation;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -37,7 +39,7 @@ public class WeatherNowParser {
 
             if (command.equals("-s")) {
                 Map<String, String> coordinates = GPSCoordParser.jsonParserToGetCoordInfos(jsonResponse);
-                SettingsFileController.saveCoord(city, country, state, coordinates.get("latitude"), coordinates.get("longitude"));
+                SettingsLocation.saveLocation(city, country, state, coordinates.get("latitude"), coordinates.get("longitude"));
             }
 
             return generateBulletin(city, state, jsonResponse);
@@ -54,7 +56,7 @@ public class WeatherNowParser {
 
     //Fetch weather informations for saved city
     public static String fetchWeatherInfosForSavedCity(){
-        Map<String, String> coord = SettingsFileController.getCoord();
+        Map<String, String> coord = SettingsLocation.getLocation();
         String city = coord.get("city");
         String state = coord.get("state");
 
@@ -118,7 +120,7 @@ public class WeatherNowParser {
         }
 
         return "https://api.openweathermap.org/data/2.5/weather?q=" + localisationInfos
-                + "&appid=" + SettingsFileController.getAppId();
+                + "&appid=" + SettingsKey.getOpenWeatherMapKey();
 
     }
 

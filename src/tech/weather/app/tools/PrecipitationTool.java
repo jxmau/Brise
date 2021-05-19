@@ -3,6 +3,7 @@ package tech.weather.app.tools;
 import org.apache.maven.settings.Settings;
 import tech.weather.settings.SettingsFileController;
 import tech.weather.settings.SettingsService;
+import tech.weather.settings.SettingsUnit;
 
 import java.util.Map;
 
@@ -35,18 +36,20 @@ public class PrecipitationTool {
     }
 
     public static String getRainUnit(Double rain){
-        if (SettingsService.getUnit().equals("imperial")){
-            return Math.round((rain / 25.4) * 100.0) / 100.0 + " in";
-        } else {
-            return Math.round(rain * 100.0) / 100.0 + " mm";
-        }
+        return switch(SettingsUnit.getUnit("precipitation")){
+            case "imperial" -> Math.round((rain / 25.4) * 100.0) / 100.0 + " in";
+            case "metric" -> Math.round(rain * 100.0) / 100.0 + " mm";
+            case "scientific" -> Math.round(rain * 100.0) / 100.0 + " mm";
+            default -> "N/A ";
+        };
     }
 
     public static String getSnowUnit(Double snowFall){
-        return switch (SettingsService.getUnit()){
+        return switch (SettingsUnit.getUnit("precipitation")){
           case "imperial" -> Math.round((snowFall / 25.4) * 100.0) / 100.0 + " in";
           case "metric" -> snowFall + " mm";
-            default -> snowFall + " mm";
+          case "scientific" -> snowFall + " mm";
+          default -> "N/A ";
         };
     }
 }

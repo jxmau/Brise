@@ -3,6 +3,7 @@ package tech.weather.app.tools;
 
 import tech.weather.settings.SettingsFileController;
 import tech.weather.settings.SettingsService;
+import tech.weather.settings.SettingsUnit;
 
 public class WindTool {
 
@@ -52,10 +53,10 @@ public class WindTool {
     }
 
     public static String getWindSpeed(Double windSpeed){
-        return switch (SettingsService.getUnit()){
-            case "scientific" -> windSpeed + " m/s";
-            case "metric" -> Math.round((windSpeed * 3.6) * 100.0) / 100.0 + " kph";
-            case "imperial" -> Math.round((windSpeed * 2.237) * 100.0) / 100.0 + " mph";
+        return switch (SettingsUnit.getUnit("speed")){
+            case "m/s" -> windSpeed + " m/s"; // scientific
+            case "kph" -> Math.round((windSpeed * 3.6) * 100.0) / 100.0 + " kph"; // metric
+            case "mph" -> Math.round((windSpeed * 2.237) * 100.0) / 100.0 + " mph"; // Imperial
             default -> "N/A";
         };
     }

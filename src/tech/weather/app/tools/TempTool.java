@@ -2,6 +2,7 @@ package tech.weather.app.tools;
 
 import tech.weather.settings.SettingsFileController;
 import tech.weather.settings.SettingsService;
+import tech.weather.settings.SettingsUnit;
 
 public class TempTool {
 
@@ -12,10 +13,10 @@ public class TempTool {
 
     // Temp is received in Kelvin by default
     public static String getTemp(Double temp){
-        return switch (SettingsService.getUnit()){
-            case "metric" -> getCelcius(temp);
-            case "imperial" -> getFarenheit(temp);
-            default -> temp + "°K";
+        return switch (SettingsUnit.getUnit("temp")){
+            case "celcius" -> getCelcius(temp); // metric
+            case "farenheit" -> getFarenheit(temp); // imperial
+            default -> temp + "°K"; // scientific / by default
         };
     }
 

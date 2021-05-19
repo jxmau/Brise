@@ -8,6 +8,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import tech.weather.settings.SettingsFileController;
+import tech.weather.settings.SettingsKey;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -48,13 +49,13 @@ public class HelloParser {
         if (!country.equals("N/A") && state.equals("N/A")){
 
             return "https://api.openweathermap.org/data/2.5/weather?q=" + city + "," + country
-                    + "&appid=" + SettingsFileController.getAppId();
+                    + "&appid=" + SettingsKey.getOpenWeatherMapKey();
         } else if (!country.equals("N/A") && !state.equals("N/A")){
 
             return "https://api.openweathermap.org/data/2.5/weather?q=" + city + "," + state
-                    + "," + country + "&appid=" + SettingsFileController.getAppId();
+                    + "," + country + "&appid=" + SettingsKey.getOpenWeatherMapKey();
         } else {
-            return "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + SettingsFileController.getAppId();
+            return "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + SettingsKey.getOpenWeatherMapKey();
         }
     }
 
