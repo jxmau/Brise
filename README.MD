@@ -1,5 +1,5 @@
 [![Generic badge](https://img.shields.io/badge/License-CC%204.0%20BY%20--%20NC-green)](https://creativecommons.org/licenses/by-nc/4.0/)
-[![Generic badge](https://img.shields.io/badge/Release-V1.0.0-blueviolet)](https://github.com/jxmau/Brise/releases/tag/V1.0.0)
+[![Generic badge](https://img.shields.io/badge/Release-V1.1.0-blueviolet)](https://github.com/jxmau/Brise/releases/tag/V1.0.0)
 [![CodeFactor](https://www.codefactor.io/repository/github/jxmau/brise/badge)](https://www.codefactor.io/repository/github/jxmau/brise)
 
 <h2>Brise </h2>

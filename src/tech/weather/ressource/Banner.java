@@ -10,7 +10,7 @@ public class Banner {
                   |  __'.[ `/'`\\][  | ( (`\\]/ /__\\\\
                  _| |__) || |     | |  `'.'.| \\__.,
                 |_______/[___]   [___][\\__) )'.__.'
-                                                V.1.0.0
+                                                V.1.1.0
                 Terminal TUI using OpenWeatherMap APIs.
                 Brise's repository : https://github.com/jxmau/Brise
                
