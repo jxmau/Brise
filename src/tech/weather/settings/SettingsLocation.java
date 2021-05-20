@@ -3,6 +3,8 @@ package tech.weather.settings;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import tech.weather.app.uri.OpenWeatherMapURI;
+import tech.weather.tools.GPSCoordParser;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -26,6 +28,14 @@ public class SettingsLocation {
         } catch (IOException | ParseException e) {
             throw new IllegalStateException("There has been an error");
         }
+    }
+
+
+    public static void saveLocationWithoutGPS(String city, String country, String state){
+        Map<String, Map<String, Object>> responseBody = OpenWeatherMapURI.currentWeatherForLocation(city, country, state);
+        Map<String, Object> cityMap = responseBody.get("city");
+        Map<String, String> coord = (Map<String, String>) cityMap.get("coord");
+        saveLocation(city, country, state, coord.get("lat"), coord.get("lon"));
     }
 
     // Will save the location informations.
