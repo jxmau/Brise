@@ -1,6 +1,5 @@
 package tech.weather.tools;
 
-import tech.weather.settings.SettingsService;
 import tech.weather.settings.SettingsUnit;
 
 import java.util.Map;
@@ -48,6 +47,24 @@ public class PrecipitationTool {
           case "metric" -> snowFall + " mm";
           case "scientific" -> snowFall + " mm";
           default -> "N/A ";
+        };
+    }
+
+    public static String getRainVolume(Double rain){
+        return switch(SettingsUnit.getUnit("precipitation")){
+            case "imperial" -> Math.round((rain / 25.4) * 100.0) / 100.0 + "";
+            case "metric" -> Math.round(rain * 100.0) / 100.0 + "";
+            case "scientific" -> Math.round(rain * 100.0) / 100.0 + "";
+            default -> "N/A ";
+        };
+    }
+
+    public static String getSnowVolume(Double snowFall){
+        return switch (SettingsUnit.getUnit("precipitation")){
+            case "imperial" -> Math.round((snowFall / 25.4) * 100.0) / 100.0 + "";
+            case "metric" -> snowFall + "";
+            case "scientific" -> snowFall + "";
+            default -> "N/A ";
         };
     }
 }

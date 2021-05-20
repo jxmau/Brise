@@ -1,6 +1,5 @@
 package tech.weather.tools;
 
-import tech.weather.settings.SettingsService;
 import tech.weather.settings.SettingsUnit;
 
 public class TempTool {
