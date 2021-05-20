@@ -38,16 +38,18 @@ public class SettingsController {
                 OpenWeatherMap : %s
                 
                     > Unit System : %s
-                Temperature : %s    | Air : %s
-                Speed : %s          | Precipitation : %s
+                Temperature   : %s     
+                Air           : %s
+                Speed         : %s          
+                Precipitation : %s
                 
                 """.formatted(settings.get("location").get("city"), settings.get("location").get("country"),
                 settings.get("location").get("state"),
                 settings.get("location").get("latitude"), settings.get("location").get("longitude"),
                 settings.get("key").get("openWeatherMap"),
-                settings.get("unit").get("system"),
-                settings.get("unit").get("temp"), settings.get("unit").get("air"),
-                settings.get("unit").get("speed"), settings.get("unit").get("precipitation"));
+                getSystemUnit(settings.get("unit").get("system")),
+                getTempUnit(settings.get("unit").get("temp")), settings.get("unit").get("air"),
+                getSpeedUnit(settings.get("unit").get("speed")), getPrecipitationUnit(settings.get("unit").get("precipitation")));
     }
 
     private static void parser(String cli){
@@ -128,7 +130,26 @@ public class SettingsController {
         System.out.print("Please, enter your new key : ");
         Scanner scan = new Scanner(System.in);
         SettingsKey.modifyOpeanWeatherMapKey(scan.nextLine());
+    }
 
+    private static String getSystemUnit(String systemUnit){
+        String systems = "metric  imperial  scientific  personalized";
+        return systems.replace(systemUnit, String.format("\u001B[32m%s\u001B[0m", systemUnit));
+    }
+
+    private static String getTempUnit(String tempUnit){
+        String tempList = "celcius  farenheit  kelvin";
+        return tempList.replace(tempUnit, String.format("\u001B[32m%s\u001B[0m", tempUnit));
+    }
+
+    private static String getSpeedUnit(String speedUnit){
+        String speedList = "kph  mph  ms";
+        return speedList.replace(speedUnit, String.format("\u001B[32m%s\u001B[0m", speedUnit));
+    }
+
+    private static String getPrecipitationUnit(String precipitationUnit){
+        String precipitationList = "metric  imperial  scientific";
+        return precipitationList.replace(precipitationUnit, String.format("\u001B[32m%s\u001B[0m", precipitationUnit));
     }
 
 }
