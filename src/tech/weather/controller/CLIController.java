@@ -3,6 +3,7 @@ package tech.weather.controller;
 import org.json.simple.parser.ParseException;
 import tech.weather.app.air.now.AirPollutionParser;
 import tech.weather.app.hello.HelloParser;
+import tech.weather.app.rain.RainRequest;
 import tech.weather.ressource.help.Help;
 import tech.weather.app.weather.day.WeatherDayRequest;
 import tech.weather.app.weather.now.WeatherNowParser;
@@ -36,6 +37,7 @@ public class CLIController {
             case "hello" -> helloController(commandLine);
             case "air" -> airPollutionController(commandLine);
             case "weather" -> weatherController(commandLine);
+            case "rain" -> rainController(commandLine);
             case "help" -> Help.generalHelp();
             case "key" -> SettingsKey.modifyOpeanWeatherMapKey(commandLine.get("selection")); // The key will hosted in the second key (selection)
             case "settings" -> SettingsController.enterSettingsShell();
@@ -94,4 +96,28 @@ public class CLIController {
 
     }
 
+    // This is the rain controller for fetching
+    // precipitation information of a location
+    private static String rainController(Map<String, String> commandLine) {
+        if (commandLine.get("city").equals("N/A")){
+            return switch (commandLine.get("selection")){
+                case "now" -> RainRequest.getHourlyPrecipitationForSavedCity("now");
+                case "today" -> RainRequest.getHourlyPrecipitationForSavedCity("today");
+                case "tomorrow" -> RainRequest.getHourlyPrecipitationForSavedCity("tomorrow");
+                case "help" -> Help.rainHelp();
+                default -> "Invalid Command. ";
+            };
+        } else {
+            return switch (commandLine.get("selection")) {
+                case "now" -> RainRequest.getHourlyPrecipitation
+                        (commandLine.get("city"), commandLine.get("country"),
+                                commandLine.get("state"), commandLine.get("command"), "now");
+                case "today" -> RainRequest.getHourlyPrecipitation(commandLine.get("city"), commandLine.get("country"),
+                        commandLine.get("state"), commandLine.get("command"), "today");
+                case "tomorrow" -> RainRequest.getHourlyPrecipitation(commandLine.get("city"), commandLine.get("country"),
+                        commandLine.get("state"), commandLine.get("command"), "tomorrow");
+                default -> "Invalid Command. ";
+            };
+        }
+    }
 }

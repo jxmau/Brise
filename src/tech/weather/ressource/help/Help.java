@@ -62,8 +62,23 @@ public class Help {
                 weather today <city name> <country ISO code> <state ISO code>
                 
                 <Hint>
-                Add "-s" at the end of the command to save the city.
+                Add "-s" at the end of the command to save the location.
                 """;
 
+    }
+
+    public static String rainHelp(){
+        return """
+                Will get precipitation information of a location (rain/snow)
+                     > To get current precipitation information -
+                rain now <city name> <country ISO code> <state ISO code>     
+                    > To get today's precipitation information - 
+                rain today <city name> <country ISO code> <state ISO code>    
+                    > To get tomorrow's precipitation information -
+                rain today <city name> <country ISO code> <state ISO code>
+                
+                <Hint>
+                Add "-s" at the end of the command to save the location.
+                """;
     }
 }
