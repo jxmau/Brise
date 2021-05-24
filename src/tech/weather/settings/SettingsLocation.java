@@ -33,9 +33,8 @@ public class SettingsLocation {
 
     public static void saveLocationWithoutGPS(String city, String country, String state){
         Map<String, Map<String, Object>> responseBody = OpenWeatherMapURI.currentWeatherForLocation(city, country, state);
-        Map<String, Object> cityMap = responseBody.get("city");
-        Map<String, String> coord = (Map<String, String>) cityMap.get("coord");
-        saveLocation(city, country, state, coord.get("lat"), coord.get("lon"));
+        Map<String, Object> coord = responseBody.get("coord");
+        saveLocation(city, country, state, coord.get("lat").toString(), coord.get("lon").toString());
     }
 
     // Will save the location informations.
