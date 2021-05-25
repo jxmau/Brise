@@ -28,7 +28,6 @@ public class HelloParser {
         JSONParser parser = new JSONParser();
 
         Map<String, Object> rawResponse = (Map<String, Object>) parser.parse(responseBody);
-        System.out.println(rawResponse.get("cod"));
         if (!rawResponse.get("cod").toString().equals("200")){
             return "Sorry, the city couldn't be found.";
         }
