@@ -12,6 +12,9 @@ public class WeatherNowAssembler {
 
 
     public static String generateInformations(Map<String, Map<String, Object>> jsonResponse, String localisation) {
+
+
+        System.out.println(jsonResponse);
         Map<String, Object> airInfos = jsonResponse.get("main");
         Map<String, Object> windInfos = jsonResponse.get("wind");
         List<Map<String, Object>> weatherList = (List<Map<String, Object>>) jsonResponse.get("weather");

@@ -1,6 +1,7 @@
 package tech.weather.app.rain.now;
 
 import org.json.simple.parser.JSONParser;
+import tech.weather.app.error.OpenWeatherMapError;
 import tech.weather.tools.PrecipitationTool;
 
 import java.util.Map;
@@ -15,7 +16,7 @@ public class RainNowAssembler {
         Object rawResponse = (Object) weatherInformation;
         Map<String, Object> rawResponseMap = (Map<String, Object>) rawResponse;
         if (!rawResponseMap.get("cod").toString().equals("200")){
-            return "Sorry, the city couldn't be found.";
+            return OpenWeatherMapError.checkCode(rawResponseMap.get("cod").toString());
         }
 
         if (weatherInformation.get("rain") != null){

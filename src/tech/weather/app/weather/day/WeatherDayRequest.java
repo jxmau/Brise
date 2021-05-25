@@ -7,6 +7,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import tech.weather.app.error.OpenWeatherMapError;
 import tech.weather.settings.SettingsFileController;
 import tech.weather.settings.SettingsKey;
 import tech.weather.settings.SettingsLocation;
@@ -55,9 +56,10 @@ public class WeatherDayRequest {
 
             JSONParser parser = new JSONParser();
 
+            // Will make sure that there's no 404 error
             Map<String, Object> rawResponse = (Map<String, Object>) parser.parse(responseBody);
             if (!rawResponse.get("cod").toString().equals("200")){
-                return "Sorry, the city couldn't be found.";
+                return OpenWeatherMapError.checkCode(rawResponse.get("cod").toString());
             }
 
             Map<String, Map<String, Object>> jsonResponse = (Map<String, Map<String, Object>>) parser.parse(responseBody);
@@ -129,7 +131,7 @@ public class WeatherDayRequest {
 
             Map<String, Object> rawResponse = (Map<String, Object>) parser.parse(responseBody);
             if (!rawResponse.get("cod").toString().equals("200")){
-                return "Sorry, the city couldn't be found.";
+                return OpenWeatherMapError.checkCode(rawResponse.get("cod").toString());
             }
 
             if (command.equals("-s")) {

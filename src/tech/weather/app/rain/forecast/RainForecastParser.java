@@ -1,5 +1,6 @@
 package tech.weather.app.rain.forecast;
 
+import tech.weather.app.error.OpenWeatherMapError;
 import tech.weather.tools.PrecipitationTool;
 
 import java.time.Clock;
@@ -18,7 +19,7 @@ public class RainForecastParser {
         Object rawResponse = (Object) response;
         Map<String, Object> rawResponseMap = (Map<String, Object>) rawResponse;
         if (!rawResponseMap.get("cod").toString().equals("200")){
-            return "Sorry, the city couldn't be found.";
+            return OpenWeatherMapError.checkCode(rawResponseMap.get("cod").toString());
         }
 
         Long timeZone = (Long) response.get("city").get("timezone");

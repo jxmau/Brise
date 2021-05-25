@@ -7,6 +7,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import tech.weather.app.error.OpenWeatherMapError;
 import tech.weather.tools.GPSCoordParser;
 import tech.weather.settings.SettingsKey;
 import tech.weather.settings.SettingsLocation;
@@ -48,7 +49,7 @@ public class AirPollutionParser {
         Map<String, String> coordinates = GPSCoordParser.getCoordinates(city, country, state);
         // Will make sure that there's no 404 error
         if (!coordinates.get("cod").equals("200")){
-            return "Sorry, the city couldn't be found.";
+            return OpenWeatherMapError.checkCode(coordinates.get("cod"));
         }
         // Save the city's location infos
         if (command.equals("-s")) {
