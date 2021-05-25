@@ -6,7 +6,7 @@ public class AirPollutionTool {
 
     public static final String ANSI_RESET = "\u001B[0m";
     public static final String ANSI_RED = "\u001B[31m";
-    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_WHITE = "\u001B[37m";
     public static final String ANSI_YELLOW = "\u001B[33m";
 
     public static String airUnit = SettingsUnit.getUnit("air");
@@ -34,7 +34,7 @@ public class AirPollutionTool {
         // the modification is took in account in this Class.
         airUnit = SettingsUnit.getUnit("air");
 
-        String colour = ANSI_GREEN;
+        String colour = "";
         Double coPPM = getPPM(co, 28.01);
         if (coPPM >= 25) { // WHO exposure limit for 1 hour
             colour = ANSI_RED;
@@ -64,7 +64,7 @@ public class AirPollutionTool {
     // Get NO2
     public static String getNO2(Double no2) {
         Double no2PPM = getPPM(no2, 46.01);
-        String colour = ANSI_GREEN;
+        String colour = "";
         if (no2PPM >= 0.1){
             colour = ANSI_RED;
         } else if (no2PPM >= 0.053){
@@ -84,9 +84,9 @@ public class AirPollutionTool {
 
         Double o3PPM = getPPM(o3, 48.00);
 
-        String colour = ANSI_GREEN;
+        String colour = "";
         if (o3PPM >= 0.070){
-            colour = ANSI_YELLOW;
+            colour = ANSI_RED;
         }
 
         if (airUnit.equals("ppm")){
@@ -100,7 +100,7 @@ public class AirPollutionTool {
     // Get SO2
     public static String getSO2(Double so2) {
         Double so2PPM = getPPM(so2, 64.01);
-        String colour = ANSI_GREEN;
+        String colour = "";
         if (so2PPM >= 0.5){
             colour = ANSI_RED;
         } else if (so2PPM >= 0.075){
@@ -118,7 +118,7 @@ public class AirPollutionTool {
     // Get NH3 - LIMITS are not imported -
     public static String getNH3(Double nh3){
         Double nh3PPM = getPPM(nh3, 34.063);
-        String colour = ANSI_GREEN;
+        String colour = "";
 
         if (airUnit.equals("ppm")){
             return colour + nh3PPM+ ANSI_RESET  + " " + getUnit();
@@ -134,7 +134,7 @@ public class AirPollutionTool {
     // Get PM2_5
     public static String getPM2_5(Double pm2_5) {
 
-        String colour = ANSI_GREEN;
+        String colour = "";
         if (pm2_5 >= 35){
             colour = ANSI_RED;
         }
@@ -144,7 +144,7 @@ public class AirPollutionTool {
     //
     public static String getPM10(Double pm10) {
 
-        String colour = ANSI_GREEN;
+        String colour = "";
         if (pm10 >= 150){
             colour = ANSI_RED;
         }
