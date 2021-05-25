@@ -5,10 +5,17 @@ public class Help {
         return """
                     Main commands :
         
-                hello <city name>                                                -> Fetch quick weather information from a major city.
+                hello <city name>   -> Fetch quick weather information from a major city.
+                
                 weather now <city name> <country ISO code> <state ISO code>      -> Fetch complete current weather information.
                 weather today <city name> <country ISO code> <state ISO code>    -> Fetch complete weather information for today.
-                air <city name> <country ISO code> <state ISO code>             -> Fetch current air quality information.
+                weather tomorrow <city name> <country ISO code> <state ISO code> -> Fetch complete weather information for tomorrow.
+                
+                air <city name> <country ISO code> <state ISO code>   -> Fetch current air quality information.
+                
+                rain now <city name> <country ISO code> <state ISO code>      -> Fetch complete current precipitation information.
+                rain today <city name> <country ISO code> <state ISO code>    -> Fetch complete precipitation information for today.
+                rain tomorrow <city name> <country ISO code> <state ISO code> -> Fetch complete precipitation information for tomorrow.
                 
                     Hints :
                 To save a city : Add "-s" at the end of the line. It doesn't work with the hello command.
@@ -23,26 +30,29 @@ public class Help {
 
     public static String limitsHelp(){
         return """
-        LIMITS : (According to WHO)
+        LIMITS : For more information, please read the LIMITS.MD on Brise's repository.
         
             > Molecules :
-        CO -> RED : above 8 hours exposure (10310 μg/m3) - ORANGE : above 24 hours exposure (6874 μg/m3)
+        CO -> ORANGE : for an exposure of 8 hours (10 ppm) - RED : for less than an hour of exposure (25 ppm) 
         NO -> N/A
-        NO2 -> RED : above annual mean exposure (40 μg/m3)
-        O3 -> RED : above annual mean exposure (100 μg/m3)
-        SO2 -> RED : above 24 hours mean exposure (20 μg/m3)
+        NO2 -> ORANGE : limit fo yearly exposure ( 0.053 ppm) - RED : for a single exposure of 8h over 3 yrs (0.1 ppm)
+        O3 -> RED : limit of a single exposure of 8h over a year (0.070 ppm)
+        SO2 -> ORANGE : for a single exposure over 1 hour for three years (0.075 ppm) - RED : for a single 3h exposure over a year (0.5 ppm)
         NH3 -> N/A
         
             > Particulates :
-        PM 2.5 -> RED : above 24 hours mean exposure (10 μg/m3) - ORANGE : above annual mean exposure (25 μg/m3)
-        PM 10 -> RED : above 24 hours mean exposure (20 μg/m3) - ORANGE : above annual mean exposure (50 μg/m3)
+        PM 2.5 -> RED : for a single 24h exposure over a year (35 μg/m3) 
+        PM 10 -> RED : for a single 24h exposure over a year (150 μg/m3) 
+        
+        The colour code shows only critical limits -
+        For more information, please read the LIMITS.MD on Brise's repository.
         """;
     }
 
     public static String pollutantsHelp(){
         return """
                     > Molecules :
-                CO   -> Carbon Monoxyde     | NO   -> Nitric Oxyde
+                CO   -> Carbon Monoxide     | NO   -> Nitric Oxide
                 NO2  -> Nitrogen Dioxide    | O3   -> Ozone
                 SO2  -> Sulfur Dioxide      | NH3  -> Ammonia
                 
@@ -81,4 +91,6 @@ public class Help {
                 Add "-s" at the end of the command to save the location.
                 """;
     }
+
+
 }
