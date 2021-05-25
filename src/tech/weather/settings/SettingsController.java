@@ -24,6 +24,7 @@ public class SettingsController {
             cli = scanner.nextLine();
             parser(cli);
         }
+        Screen.clear();
         return "Settings' shell exited.";
     }
 
@@ -48,7 +49,7 @@ public class SettingsController {
                 settings.get("location").get("latitude"), settings.get("location").get("longitude"),
                 settings.get("key").get("openWeatherMap"),
                 getSystemUnit(settings.get("unit").get("system")),
-                getTempUnit(settings.get("unit").get("temp")), settings.get("unit").get("air"),
+                getTempUnit(settings.get("unit").get("temp")), getAirPollutionUnit(settings.get("unit").get("air")),
                 getSpeedUnit(settings.get("unit").get("speed")), getPrecipitationUnit(settings.get("unit").get("precipitation")));
     }
 
@@ -80,13 +81,14 @@ public class SettingsController {
     private static void modifyUnit(){
         String unitHelpString = """
                     > For updating to Unit System altogether :
-                imperial   -> Speed : mph | Temperature : °F
-                metric     -> Speed : kph | Temperature : °C
-                scientific -> Speed : m/s | Temperature : °K
+                imperial   -> Speed : mph | Temperature : °F | Precipitation : in | Air Pollution : μgm3
+                metric     -> Speed : kph | Temperature : °C | Precipitation : mm | Air Pollution : μgm3
+                scientific -> Speed : m/s | Temperature : °K | Precipitation : mm | Air Pollution : ppm
                     > To updating a unit.
                 temperature : celcius (°C) - farenheit (°F) - kelvin (°K)
                 speed : kph (kilometers per hour) - mph (miles per hour) - ms (meters per second)
-                precipitation : metric (meter and millimeters) - imperial (foot and inches) 
+                precipitation : metric (meter and millimeters) - imperial (foot and inches)
+                air : μgm3 (micrograms per cube meters) - ppm (parts per million)
                 """;
         System.out.println(unitHelpString);
         System.out.print("Make a choice : ");
@@ -96,6 +98,7 @@ public class SettingsController {
         // Use a token system in lieu of listing all valid keywords.
         Boolean correct = false;
         while (!correct){
+
 
             if (cli[0].equals("exit")) {
                 correct = true;
@@ -112,6 +115,9 @@ public class SettingsController {
                 correct = true;
             } else if (cli[0].equals("precipitation") && (cli[1].equals("metric") || cli[1].equals("imperial"))){
                 SettingsUnit.modifyUnit(cli[0], cli[1]);
+                correct = true;
+            } else if (cli[0].equals("air") && (cli[1].equals("μgm3") || cli[1].equals("ppm"))){
+                SettingsUnit.modifyUnit("air", cli[1]);
                 correct = true;
             }
 
@@ -150,6 +156,11 @@ public class SettingsController {
     private static String getPrecipitationUnit(String precipitationUnit){
         String precipitationList = "metric  imperial  scientific";
         return precipitationList.replace(precipitationUnit, String.format("\u001B[32m%s\u001B[0m", precipitationUnit));
+    }
+
+    private static String getAirPollutionUnit(String airPollutionUnit){
+        String airPollutionString = "μgm3  ppm";
+        return airPollutionString.replace(airPollutionUnit, String.format("\u001B[32m%s\u001B[0m", airPollutionUnit));
     }
 
 }

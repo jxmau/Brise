@@ -29,18 +29,21 @@ public class SettingsUnit {
                     unit.put("system", "imperial");
                     unit.put("temp", "farenheit");
                     unit.put("speed", "mph");
+                    unit.put("air", "μgm3");
                     unit.put("precipitation", "imperial");
                     break;
                 case "metric" :
                     unit.put("system", "metric");
                     unit.put("temp", "celcius");
                     unit.put("speed", "kph");
+                    unit.put("air", "μgm3");
                     unit.put("precipitation", "metric");
                     break;
                 case "scientific" :
                     unit.put("system", "scientific");
                     unit.put("temp", "kelvin");
                     unit.put("speed", "ms");
+                    unit.put("air", "ppm");
                     unit.put("precipitation", "scientific");
                     break;
                 default:
