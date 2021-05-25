@@ -21,7 +21,32 @@
 <h3>Disclaimer</h3>
 - This TUI use OpenWeatherMap's APIs, but it is not related in any way to it. <br>
 - This TUI is for personal use only. <br>
-- Information fetched by the TUI are for indications purpose only. <br>
+- Information fetched by the TUI are for indication purpose only. <br>
+
+<h2>Installation</h2>
+
+<h6> Information </h6>
+A release package contains three files : <br>
+
+* Brise.jar -> It's literally Brise.
+* Brise.sh -> It's shell script containing a shortcut to launch Brise.
+* settings.json -> It's Brise's settings file.
+
+<h6> First launch </h6>
+1. To use Brise, open a bash window at the folder's directory, then type Brise. It's a shortcut created by the Brise.sh. <br>
+2. As Brise will now start, it will check that you have saved an OWM key in your settings file. If you don't have one, one will be created. As it is the first start, it will ask you to enter your key. <br>
+3. Brise is now ready.
+
+<h6> A couple of warnings before continuing. </h6>
+Regarding the settings file, Brise has several failsafe : <br>
+
+* If missing, it will create one.
+* If it cannot read the settings file, it will straight up delete it, before recreating one.
+* If it has issue with reading your Units preference, it will use the metric system by default. 
+
+If you have an issue with your OMW key, use the key methods listed down below. 
+
+
 
 <h2>Prerequisites</h2>
 
