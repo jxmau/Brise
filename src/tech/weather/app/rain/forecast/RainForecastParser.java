@@ -14,6 +14,13 @@ public class RainForecastParser {
 
     public static String parseResponse(Map<String, Map<String, Object>> response, String location, String period){
 
+        // Will check if the query was successful
+        Object rawResponse = (Object) response;
+        Map<String, Object> rawResponseMap = (Map<String, Object>) rawResponse;
+        if (!rawResponseMap.get("cod").toString().equals("200")){
+            return "Sorry, the city couldn't be found.";
+        }
+
         Long timeZone = (Long) response.get("city").get("timezone");
         List<Map<String, Object>> forecastList = (List<Map<String, Object>>) response.get("list");
         LocalDate TOMORROW = LocalDateTime.now(Clock.systemUTC()).plusSeconds(timeZone).plusDays(1).toLocalDate();

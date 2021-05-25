@@ -1,5 +1,6 @@
 package tech.weather.app.rain.now;
 
+import org.json.simple.parser.JSONParser;
 import tech.weather.tools.PrecipitationTool;
 
 import java.util.Map;
@@ -9,6 +10,13 @@ import java.util.Map;
 public class RainNowAssembler {
 
     public static String rainAssembler(Map<String, Map<String, Object>> weatherInformation, String location){
+
+        // Will check if the query was successful.
+        Object rawResponse = (Object) weatherInformation;
+        Map<String, Object> rawResponseMap = (Map<String, Object>) rawResponse;
+        if (!rawResponseMap.get("cod").toString().equals("200")){
+            return "Sorry, the city couldn't be found.";
+        }
 
         if (weatherInformation.get("rain") != null){
             Map<String, Object> rain = weatherInformation.get("rain");
