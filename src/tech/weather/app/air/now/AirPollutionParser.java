@@ -7,8 +7,10 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import tech.weather.app.tools.GPSCoordParser;
-import tech.weather.settings.SettingsFileController;
+import tech.weather.app.error.OpenWeatherMapError;
+import tech.weather.tools.GPSCoordParser;
+import tech.weather.settings.SettingsKey;
+import tech.weather.settings.SettingsLocation;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -18,7 +20,7 @@ public class AirPollutionParser {
 
 
     public static String fetchAirPollutionInfosForSavedCity(){
-        Map<String, String> coord = SettingsFileController.getCoord();
+        Map<String, String> coord = SettingsLocation.getLocation();
 
         if (coord.get("latitude").length() < 1){
             return """
@@ -47,11 +49,11 @@ public class AirPollutionParser {
         Map<String, String> coordinates = GPSCoordParser.getCoordinates(city, country, state);
         // Will make sure that there's no 404 error
         if (!coordinates.get("cod").equals("200")){
-            return "Sorry, the city couldn't be found.";
+            return OpenWeatherMapError.checkCode(coordinates.get("cod"));
         }
         // Save the city's location infos
         if (command.equals("-s")) {
-            SettingsFileController.saveCoord(city, country, state, coordinates.get("latitude"), coordinates.get("longitude"));
+            SettingsLocation.saveLocation(city, country, state, coordinates.get("latitude"), coordinates.get("longitude"));
         }
 
         String location = cityParser(city);
@@ -66,7 +68,7 @@ public class AirPollutionParser {
     private static String generateBulletin(Map<String, String> coordinates, String location){
         try {
 
-            String appId = SettingsFileController.getAppId();
+            String appId = SettingsKey.getOpenWeatherMapKey();
             if (appId.equals("Error")){
                 return "An error has occurred.";
             }

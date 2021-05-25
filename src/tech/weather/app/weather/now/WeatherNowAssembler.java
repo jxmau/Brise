@@ -1,9 +1,9 @@
 package tech.weather.app.weather.now;
 
 
-import tech.weather.app.tools.PrecipitationTool;
-import tech.weather.app.tools.TempTool;
-import tech.weather.app.tools.WindTool;
+import tech.weather.tools.PrecipitationTool;
+import tech.weather.tools.TempTool;
+import tech.weather.tools.WindTool;
 
 import java.util.List;
 import java.util.Map;
@@ -12,6 +12,9 @@ public class WeatherNowAssembler {
 
 
     public static String generateInformations(Map<String, Map<String, Object>> jsonResponse, String localisation) {
+
+
+        System.out.println(jsonResponse);
         Map<String, Object> airInfos = jsonResponse.get("main");
         Map<String, Object> windInfos = jsonResponse.get("wind");
         List<Map<String, Object>> weatherList = (List<Map<String, Object>>) jsonResponse.get("weather");

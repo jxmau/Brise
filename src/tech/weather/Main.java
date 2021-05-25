@@ -1,7 +1,7 @@
 package tech.weather;
 
 import org.json.simple.parser.ParseException;
-import tech.weather.app.tools.Screen;
+import tech.weather.tools.Screen;
 import tech.weather.controller.CLIController;
 import tech.weather.ressource.Banner;
 import tech.weather.settings.SettingsFileController;

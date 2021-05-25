@@ -1,5 +1,5 @@
 [![Generic badge](https://img.shields.io/badge/License-CC%204.0%20BY%20--%20NC-green)](https://creativecommons.org/licenses/by-nc/4.0/)
-[![Generic badge](https://img.shields.io/badge/Release-V1.0.0-blueviolet)](https://github.com/jxmau/Brise/releases/tag/V1.0.0)
+[![Generic badge](https://img.shields.io/badge/Release-V1.1.0-blueviolet)](https://github.com/jxmau/Brise/releases/tag/V1.0.0)
 [![CodeFactor](https://www.codefactor.io/repository/github/jxmau/brise/badge)](https://www.codefactor.io/repository/github/jxmau/brise)
 
 <h2>Brise </h2>
@@ -21,7 +21,32 @@
 <h3>Disclaimer</h3>
 - This TUI use OpenWeatherMap's APIs, but it is not related in any way to it. <br>
 - This TUI is for personal use only. <br>
-- Information fetched by the TUI are for indications purpose only. <br>
+- Information fetched by the TUI are for indication purpose only. <br>
+
+<h2>Installation</h2>
+
+<h6> Information </h6>
+A release package contains three files : <br>
+
+* Brise.jar -> It's literally Brise.
+* Brise.sh -> It's shell script containing a shortcut to launch Brise.
+* settings.json -> It's Brise's settings file.
+
+<h6> First launch </h6>
+1. To use Brise, open a bash window at the folder's directory, then type Brise. It's a shortcut created by the Brise.sh. <br>
+2. As Brise will now start, it will check that you have saved an OWM key in your settings file. If you don't have one, one will be created. As it is the first start, it will ask you to enter your key. <br>
+3. Brise is now ready.
+
+<h6> A couple of warnings before continuing. </h6>
+Regarding the settings file, Brise has several failsafe : <br>
+
+* If missing, it will create one.
+* If it cannot read the settings file, it will straight up delete it, before recreating one.
+* If it has issue with reading your Units preference, it will use the metric system by default. 
+
+If you have an issue with your OMW key, use the key methods listed down below. 
+
+
 
 <h2>Prerequisites</h2>
 
@@ -39,149 +64,75 @@ Brise allows you the possibility to save a city in your settings file. To save y
 
 <h6> System Unit </h6>
 
-Brise allows you to choose your Unit System. By default, Brise will display information using the Metric System. 
+Brise supports three types of Unit System, but you can also used a personalized one by changing unit directly in the unit shell.
 
+| Unit System | Speed | Temperature | Precipitation | Air Pollution |
+| ----------- | ----- | ----------- | ------------- | ------------- |
+| Metric | Kilometers per hour (kph) | Celsius (°C) | Millimeters (mm) | Micrograms per cube meter(μgm3) |
+| Metric | Miles per hour (mph) | Fahrenheit (°F) | Inches (in) | Micrograms per cube meter (μgm3) |
+| Metric | Meters per second (ms) | Kelvin (°K) | Millimeters (mm) | Parts per million (ppm) |
 
 
 <h2>Commands List </h2>
 
-<h5> Informations </h5>
+<h5> Information </h5>
+
+<h6> City Name </h6>
 As one would know, a city can have a multiple words name like San Francisco or Saint Petersburg. To avoid an error, please, replace the space by a "+". <br>
 Example : New York -> New+York
 
-<h5> Hello </h5>
+<h6> State ISO code </h6>
+Can be used only for US' cities. <br>
+Example : Washington US DC.
 
-```hello <city name> <country code> <state code>``` <br> <br>
-Hello is a quick and simple command that will fetch simple weather information as the weather condition, the temperature,
-the direction and speed of the wind and the humidity level.<br> <br>
-/!\ Please note that you cannot save a city or fetch a save city using this command. /!\
+<h4> Main shell </h4>
 
-<h5> Weather Information </h5>
+| Action               | Command Line                                  | Option | 
+|----------------------|-----------------------------------------------|--------|
+| Quick Weather Info   | hello [city] [country ISO Code] [State]       |        |
+| Current Weather Info | weather now [city] [country ISO Code] [State] | -s     | 
+| Today's Weather Forecast | weather today [city] [country ISO Code] [State] | -s     | 
+| Tomorrow's Weather Forecast| weather tomorrow [city] [country ISO Code] [State] | -s     |
+| Current Air Pollution Info | air [city] [country ISO Code] [State] | -s     | 
+| Current Precipitation Info | rain now [city] [country ISO Code] [State] | -s     | 
+| Today's Precipitation Forecast | rain today [city] [country ISO Code] [State] | -s     | 
+| Tomorrow's Precipitation Forecast| rain tomorrow [city] [country ISO Code] [State] | -s     |
+| Change the OWM AppId key | key [your key] | |
+| View the commands' help | help | |
+| Close Brise | exit | |
+| Enter the settings shell | settings | |
 
-<h6> Now </h6>
+<h4> Help sub-commands </h4>
 
-````weather now <city name> <country code> <state code>````
+| Action | Command Line | Details |
+| ------ | ------------ | ------- |
+| To view the name of pollutants | air -pollutants | |
+| To view the code colour and limits per pollutants | air -limits | <a href="https://www.github.com/jxmau/Brise/tree/main/src/tech/weather/tools/LIMITS.MD"> A MD doc exists in the tools folder. </a>|
 
-This command is quite similar to hello command but will get you more information in a more formal way. <br>
 
-* Example <br>
-```
- Brise > weather now Washington US DC
+<h4> Settings shell </h4>
 
-> Current Weather Condition : broken clouds
-> Air Condition :
-    Temperature : 20.6°C    | Humidity : 46
-    Atmospheric Pressure : 1027 hPa
-> Wind Condition :
-    Speed : 5.54 kph  | Degree : 130.0 SW
-> Precipitations :
-    No precipitation in the last hour.
+| Action | Command Line |
+| ------ | ------------ |
+| To exit the shell| exit |
+| To change the key | key |
+| To change unit - To enter unit shell| unit |
 
-Current condition for Washington, DC
-```
+<h5> Unit shell </h5>
+This shell does not possess a help command, but the list and explication of the key will be shown at all time.
+<br>
 
-<h6> Today </h6>
+| Action | Command Line | Possible choice |
+| ------ | ------------ | --------------- |
+| To change the Unit System| [Unit System] | metric - imperial - scientific
+| To change the speed's unit | speed [unit] | kph - mph - ms
+| To change the temperature's unit | temperature [unit] | celcius - fahrenheit - kelvin
+| To change the Air Pollution's unit | speed [unit] | μgm3 - ppm
+| To change the Precipitation's unit | speed [unit] | metric - imperial - scientific
+| To exit | exit |
 
-````weather today <city name> <country code> <state code>````
 
-This will fetch you the forecast for the same day.
-* Example <br>
-```
- Brise > weather today Caen
 
-> Air Condition :
-    Temperature :   10.6°C - 13.4°C
-    Humidity :  74 - 87
-    Atmospheric Pressure : 1012 hPa - 1013 hPa
-> Wind Condition :
-    Speed : 23.11 kph - 27.14 kph
-
-Today's Forecast for Caen
-```
-
-<h6> Tomorrow </h6>
-
-````weather tomorrow <city name> <country code> <state code>````
-
-This will fetch you the forecast for the next day.
-* Example <br>
-```
-weather tomorrow Montréal
-
-> Air Condition :
-    Temperature :   11.5°C - 14.3°C
-    Humidity :  36 - 85
-    Atmospheric Pressure : 1021 hPa - 1024 hPa
-> Wind Condition :
-    Speed : 3.71 kph - 14.22 kph
-
-Tomorrow's Forecast for Montréal
-```
-
-<h5> Current Air Pollution Information </h5>
-
-<h6> Now </h6>
-
-````air <city name> <country code> <state code>````
-
-This will get you the current air pollution information of a city.
-* Example <br>
-```
- Brise > air Paris
-
- > Molecules :
- CO : 193.6 μg/m3 | NO : 0.5 μg/m3
- NO2 : 2.51 μg/m3  | O3 : 75.1 μg/m3
- SO2 : 1.1 μg/m3 | NH3 : 0.59 μg/m3
- > Particulates :
- PM2.5 : 2.33 μg/m3 | PM10 : 2.66 μg/m3
-
-> Air Quality : Good
-
-Air Pollution Information for Paris
-```
-
-<h6>sub-commands</h6>
-
-``air -names  -> Will fetch you all pollutants names.``<br>
-``air -limits -> Will fetch you the colours code and limits according to the WHO.``
-
-<h5> Key </h5>
-
-```key <appId key>``` <br> <br>
-This command is to be used when you want to change the AppId key from OpenWeatherMap. <br>
-Once you've used this command, you'll be asked to restart the TUI to load the correct key. <br>
-
-<h5> Help </h5>
-
-```help```
-
-The help command will list every command and sub-commands.
-
-<h5> Settings </h5>
-
-```settings```
-
-Typing this command will make you enter the settings shell. It will display your API key, your city saved and the System Unit Brise used. <br>
-Example with Caen saved :
-
-````
-    > City Saved :
-City : Caen  | Country : N/A  | State : N/A
-Latitute : 49.0833 | Longitude : -0.4167
-
-    > Key Saved :
-OpenWeatherMap : [Your Key will appear here]
-
-    > Preference :
-Unit : metric
-````
-<h6> sub-commands </h6>
-
-```
-key <appId key> -> To change your key
-unit -> To change the System Unit used by Brise. Will show you the available list before you can choose.
-```
 
 <h2> License Information </h2>
 

@@ -1,4 +1,4 @@
-package tech.weather.app.tools;
+package tech.weather.tools;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -7,7 +7,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import tech.weather.settings.SettingsFileController;
+import tech.weather.settings.SettingsKey;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -70,7 +70,7 @@ public class GPSCoordParser {
             location += "," + country;
         }
 
-        return "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + SettingsFileController.getAppId();
+        return "https://api.openweathermap.org/data/2.5/weather?q=" + location + "&appid=" + SettingsKey.getOpenWeatherMapKey();
 
     }
 }

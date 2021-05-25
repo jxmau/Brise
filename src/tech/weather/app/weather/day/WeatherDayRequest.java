@@ -7,7 +7,10 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import tech.weather.app.error.OpenWeatherMapError;
 import tech.weather.settings.SettingsFileController;
+import tech.weather.settings.SettingsKey;
+import tech.weather.settings.SettingsLocation;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -19,7 +22,7 @@ public class WeatherDayRequest {
 
     // Fetch saved informations
     public static String weatherTodayForSavedCity(){
-        Map<String, String> location = SettingsFileController.getCoord();
+        Map<String, String> location = SettingsLocation.getLocation();
         if (location.get("city").length() < 1){
             return """
                     You didn't save a city !
@@ -53,9 +56,10 @@ public class WeatherDayRequest {
 
             JSONParser parser = new JSONParser();
 
+            // Will make sure that there's no 404 error
             Map<String, Object> rawResponse = (Map<String, Object>) parser.parse(responseBody);
             if (!rawResponse.get("cod").toString().equals("200")){
-                return "Sorry, the city couldn't be found.";
+                return OpenWeatherMapError.checkCode(rawResponse.get("cod").toString());
             }
 
             Map<String, Map<String, Object>> jsonResponse = (Map<String, Map<String, Object>>) parser.parse(responseBody);
@@ -63,7 +67,7 @@ public class WeatherDayRequest {
             if (command.equals("-s")) {
                 Map<String, Object> cityMap = jsonResponse.get("city");
                 Map<String, Object> coordinates = (Map<String, Object>) cityMap.get("coord");
-                SettingsFileController.saveCoord(city, country, state,
+                SettingsLocation.saveLocation(city, country, state,
                         coordinates.get("lat").toString(), coordinates.get("lon").toString());
             }
 
@@ -88,7 +92,7 @@ public class WeatherDayRequest {
 
     // Fetch saved informations
     public static String weatherTomorrowForSavedCity(){
-        Map<String, String> location = SettingsFileController.getCoord();
+        Map<String, String> location = SettingsLocation.getLocation();
         if (location.get("city").length() < 1){
             return """
                     You didn't save a city !
@@ -127,13 +131,13 @@ public class WeatherDayRequest {
 
             Map<String, Object> rawResponse = (Map<String, Object>) parser.parse(responseBody);
             if (!rawResponse.get("cod").toString().equals("200")){
-                return "Sorry, the city couldn't be found.";
+                return OpenWeatherMapError.checkCode(rawResponse.get("cod").toString());
             }
 
             if (command.equals("-s")) {
                 Map<String, Object> cityMap = jsonResponse.get("city");
                 Map<String, Object> coordinates = (Map<String, Object>) cityMap.get("coord");
-                SettingsFileController.saveCoord(city, country, state,
+                SettingsLocation.saveLocation(city, country, state,
                         coordinates.get("lat").toString(), coordinates.get("lon").toString());
             }
             String localization = cityParser(city);
@@ -162,7 +166,7 @@ public class WeatherDayRequest {
             localisation += "," + country;
         }
 
-        return "https://api.openweathermap.org/data/2.5/forecast?q=" + localisation + "&appid=" + SettingsFileController.getAppId();
+        return "https://api.openweathermap.org/data/2.5/forecast?q=" + localisation + "&appid=" + SettingsKey.getOpenWeatherMapKey();
 
     }
 

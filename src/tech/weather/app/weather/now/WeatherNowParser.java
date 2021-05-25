@@ -7,8 +7,10 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import tech.weather.app.tools.GPSCoordParser;
-import tech.weather.settings.SettingsFileController;
+import tech.weather.app.error.OpenWeatherMapError;
+import tech.weather.tools.GPSCoordParser;
+import tech.weather.settings.SettingsKey;
+import tech.weather.settings.SettingsLocation;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -35,9 +37,15 @@ public class WeatherNowParser {
             JSONParser parser = new JSONParser();
             Map<String, Map<String, Object>> jsonResponse = (Map<String, Map<String, Object>>) parser.parse(responseBody);
 
+            // Will make sure that there's no 404 error
+            Map<String, Object> rawResponse = (Map<String, Object>) parser.parse(responseBody);
+            if (!rawResponse.get("cod").toString().equals("200")){
+                return OpenWeatherMapError.checkCode(rawResponse.get("cod").toString());
+            }
+
             if (command.equals("-s")) {
                 Map<String, String> coordinates = GPSCoordParser.jsonParserToGetCoordInfos(jsonResponse);
-                SettingsFileController.saveCoord(city, country, state, coordinates.get("latitude"), coordinates.get("longitude"));
+                SettingsLocation.saveLocation(city, country, state, coordinates.get("latitude"), coordinates.get("longitude"));
             }
 
             return generateBulletin(city, state, jsonResponse);
@@ -54,7 +62,7 @@ public class WeatherNowParser {
 
     //Fetch weather informations for saved city
     public static String fetchWeatherInfosForSavedCity(){
-        Map<String, String> coord = SettingsFileController.getCoord();
+        Map<String, String> coord = SettingsLocation.getLocation();
         String city = coord.get("city");
         String state = coord.get("state");
 
@@ -79,7 +87,7 @@ public class WeatherNowParser {
             // Will make sure that there's no 404 error
             Map<String, Object> rawResponse = (Map<String, Object>) parser.parse(responseBody);
             if (!rawResponse.get("cod").toString().equals("200")){
-                return "Sorry, the city couldn't be found.";
+                return OpenWeatherMapError.checkCode(rawResponse.get("cod").toString());
             }
             return generateBulletin(city, state, jsonResponse);
 
@@ -118,7 +126,7 @@ public class WeatherNowParser {
         }
 
         return "https://api.openweathermap.org/data/2.5/weather?q=" + localisationInfos
-                + "&appid=" + SettingsFileController.getAppId();
+                + "&appid=" + SettingsKey.getOpenWeatherMapKey();
 
     }
 

@@ -7,7 +7,9 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import tech.weather.app.error.OpenWeatherMapError;
 import tech.weather.settings.SettingsFileController;
+import tech.weather.settings.SettingsKey;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -27,9 +29,8 @@ public class HelloParser {
         JSONParser parser = new JSONParser();
 
         Map<String, Object> rawResponse = (Map<String, Object>) parser.parse(responseBody);
-        System.out.println(rawResponse.get("cod"));
         if (!rawResponse.get("cod").toString().equals("200")){
-            return "Sorry, the city couldn't be found.";
+            return OpenWeatherMapError.checkCode(rawResponse.get("cod").toString());
         }
 
         Map<String, Map<String, Object>> jsonResponse = (Map<String, Map<String, Object>>) parser.parse(responseBody);
@@ -48,13 +49,13 @@ public class HelloParser {
         if (!country.equals("N/A") && state.equals("N/A")){
 
             return "https://api.openweathermap.org/data/2.5/weather?q=" + city + "," + country
-                    + "&appid=" + SettingsFileController.getAppId();
+                    + "&appid=" + SettingsKey.getOpenWeatherMapKey();
         } else if (!country.equals("N/A") && !state.equals("N/A")){
 
             return "https://api.openweathermap.org/data/2.5/weather?q=" + city + "," + state
-                    + "," + country + "&appid=" + SettingsFileController.getAppId();
+                    + "," + country + "&appid=" + SettingsKey.getOpenWeatherMapKey();
         } else {
-            return "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + SettingsFileController.getAppId();
+            return "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + SettingsKey.getOpenWeatherMapKey();
         }
     }
 
