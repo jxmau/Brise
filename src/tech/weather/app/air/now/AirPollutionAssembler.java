@@ -27,6 +27,7 @@ public class AirPollutionAssembler {
                 > Air Quality : %s
                 
                 Air Pollution Information for %s.
+                (Colour code is for indication only. Type "air -limits" to know more about it.)
                 """.formatted(airPollutantsInformations(airPollutants), airQualityCondition(main.get("aqi")), location);
     }
 
