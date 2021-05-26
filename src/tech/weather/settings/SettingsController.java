@@ -5,6 +5,8 @@ import tech.weather.tools.Screen;
 import java.util.Map;
 import java.util.Scanner;
 
+import static tech.weather.ressource.help.Help.unitHelp;
+
 // Do not close Scanners!
 // Closing secondary scanners
 // Willer create a NoSuchElementException
@@ -67,7 +69,7 @@ public class SettingsController {
                 modifyKey();
                 break;
             case "unit" :
-                modifyUnit();
+                enterModifyUnitShell();
                 break;
             case "exit" :
                 break;
@@ -78,56 +80,56 @@ public class SettingsController {
     }
 
     // Modification of Unit Preference
-    private static void modifyUnit(){
-        String unitHelpString = """
-                    > For updating to Unit System altogether :
-                imperial   -> Speed : mph | Temperature : °F | Precipitation : in | Air Pollution : μgm3
-                metric     -> Speed : kph | Temperature : °C | Precipitation : mm | Air Pollution : μgm3
-                scientific -> Speed : m/s | Temperature : °K | Precipitation : mm | Air Pollution : ppm
-                    > To updating a unit.
-                temperature : celcius (°C) - farenheit (°F) - kelvin (°K)
-                speed : kph (kilometers per hour) - mph (miles per hour) - ms (meters per second)
-                precipitation : metric (meter and millimeters) - imperial (foot and inches)
-                air : μgm3 (micrograms per cube meters) - ppm (parts per million)
-                """;
-        System.out.println(unitHelpString);
-        System.out.print("Make a choice : ");
+    private static void enterModifyUnitShell(){
+        System.out.println(unitHelp());
+        System.out.print(" Brise - Settings - Unit > ");
         Scanner scan = new Scanner(System.in);
         String unit = scan.nextLine();
         String[] cli = unit.split(" ");
-        // Use a token system in lieu of listing all valid keywords.
-        Boolean correct = false;
-        while (!correct){
 
+        if (isChoiceValid(cli)){
+            System.out.println("Modification saved.");
 
-            if (cli[0].equals("exit")) {
-                correct = true;
-            } else if (cli[0].equals("imperial") || cli[0].equals("metric") || cli[0].equals("scientific")){
-                SettingsUnit.modifyUnitSystem(cli[0]);
-                correct = true;
-            } else if (cli[0].equals("temperature") &&
-                    (cli[1].equals("celcius") || cli[1].equals("farenheit") || cli[1].equals("kelvin"))){
-                SettingsUnit.modifyUnit(cli[0], cli[1]);
-                correct = true;
-            } else if (cli[0].equals("speed") &&
-                    (cli[1].equals("kph") || cli[1].equals("mph") || cli[1].equals("ms"))){
-                SettingsUnit.modifyUnit(cli[0], cli[1]);
-                correct = true;
-            } else if (cli[0].equals("precipitation") && (cli[1].equals("metric") || cli[1].equals("imperial"))){
-                SettingsUnit.modifyUnit(cli[0], cli[1]);
-                correct = true;
-            } else if (cli[0].equals("air") && (cli[1].equals("μgm3") || cli[1].equals("ppm"))){
-                SettingsUnit.modifyUnit("air", cli[1]);
-                correct = true;
-            }
-
-            if (!correct){
+        } else if (!isChoiceValid(cli)) { // Enter the statement only when "else if"
+            while (!isChoiceValid(cli)){
+                System.out.println("Invalid choice.");
                 System.out.print(" Brise - Settings - Unit > ");
                 String line = scan.nextLine();
                 cli = line.split(" ");
             }
-
         }
+
+
+    }
+
+
+    private static boolean isChoiceValid(String[] cli){
+
+        if (cli[0].equals("exit")) {
+            return true;
+        } else if (cli[0].equals("imperial") || cli[0].equals("metric") || cli[0].equals("scientific")){
+            SettingsUnit.modifyUnitSystem(cli[0]);
+            return true;
+        } else if (cli[0].equals("temperature") &&
+                (cli[1].equals("celcius") || cli[1].equals("farenheit") || cli[1].equals("kelvin"))){
+            SettingsUnit.modifyUnit(cli[0], cli[1]);
+            return true;
+        } else if (cli[0].equals("speed") &&
+                (cli[1].equals("kph") || cli[1].equals("mph") || cli[1].equals("ms"))){
+            SettingsUnit.modifyUnit(cli[0], cli[1]);
+            return true;
+        } else if (cli[0].equals("precipitation") && (cli[1].equals("metric") || cli[1].equals("imperial"))){
+            SettingsUnit.modifyUnit(cli[0], cli[1]);
+            return true;
+        } else if (cli[0].equals("air") && (cli[1].equals("μgm3") || cli[1].equals("ppm"))){
+            SettingsUnit.modifyUnit("air", cli[1]);
+            return true;
+        } else if (cli[0].equals("help")){
+            Screen.clear();
+            System.out.println(unitHelp());
+        }
+            return false;
+
 
     }
 

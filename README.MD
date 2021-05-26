@@ -6,7 +6,7 @@
 
 <b>Brise-tui</b> is a simple Terminal User Interface using OpenWeatherMap's Current Weather and Air Pollution APIs.
 
-<h3>Ressources</h3>
+<h3>Resources</h3>
 <h5>Dependencies and Libraries Used</h5>
 
 - Apache Http Component <br>
@@ -30,22 +30,15 @@ A release package contains three files : <br>
 
 * Brise.jar -> It's literally Brise.
 * Brise.sh -> It's shell script containing a shortcut to launch Brise.
-* settings.json -> It's Brise's settings file.
+* Readme.txt -> A txt file that will guide you to start with Brise and get infos on the version used.
 
 <h6> First launch </h6>
 1. To use Brise, open a bash window at the folder's directory, then type Brise. It's a shortcut created by the Brise.sh. <br>
-2. As Brise will now start, it will check that you have saved an OWM key in your settings file. If you don't have one, one will be created. As it is the first start, it will ask you to enter your key. <br>
+2. As Brise will now start, it will create a directory in your home directory named "Brise", and will creating in it the settings file.
+3. Now that the settings file is created, you'll need to enter your OpenWeatherMap Key. 
 3. Brise is now ready.
 
-<h6> A couple of warnings before continuing. </h6>
-Regarding the settings file, Brise has several failsafe : <br>
-
-* If missing, it will create one.
-* If it cannot read the settings file, it will straight up delete it, before recreating one.
-* If it has issue with reading your Units preference, it will use the metric system by default. 
-
-If you have an issue with your OMW key, use the key methods listed down below. 
-
+If you get an error message regarding your Key that you just created, wait several minutes before trying again. <br>
 
 
 <h2>Prerequisites</h2>
@@ -54,7 +47,7 @@ If you have an issue with your OMW key, use the key methods listed down below.
 
 Brise-TUI uses apis from OPM accessible in the free plan. <br>
 While free, a key is required for each request from the TUI, that's why that the first time you'll launch Brise, you'll be asked to enter a key. <br>
-Don't worry if you've made a mistake, you can modify your key with the "key" command below.
+Don't worry if you've made a mistake, you can modify your key with the key commands listed below.
 
 <h2>Customization</h2>
 
