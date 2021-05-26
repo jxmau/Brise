@@ -12,6 +12,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
+import static tech.weather.settings.SettingsFileController.getSettingsFileName;
+
 public class SettingsLocation {
 
     // Fetch the location information saved
@@ -19,7 +21,7 @@ public class SettingsLocation {
         try {
             JSONParser parser = new JSONParser();
             Map<String, Map<String, String>> settings =
-                    (Map<String, Map<String, String>>) parser.parse(new FileReader("settings.json"));
+                    (Map<String, Map<String, String>>) parser.parse(new FileReader(getSettingsFileName()));
             return settings.get("location");
         } catch (FileNotFoundException e) {
             SettingsFileController.createSettingsFile();
@@ -41,7 +43,7 @@ public class SettingsLocation {
     public static void saveLocation(String city, String country, String state, String latitude, String longitude){
         try {
             JSONParser parser = new JSONParser();
-            JSONObject settings = (JSONObject) parser.parse(new FileReader("settings.json"));
+            JSONObject settings = (JSONObject) parser.parse(new FileReader(getSettingsFileName()));
             Map<String, String> location = (Map<String, String>) settings.get("location");
 
             location.put("city", city);
@@ -60,7 +62,7 @@ public class SettingsLocation {
             location.put("longitude", longitude);
 
             settings.put("location", location);
-            FileWriter file = new FileWriter("settings.json");
+            FileWriter file = new FileWriter(getSettingsFileName());
             file.write(settings.toJSONString());
             file.flush();
 

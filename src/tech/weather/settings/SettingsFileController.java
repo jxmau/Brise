@@ -12,6 +12,15 @@ import java.util.Scanner;
 
 public class SettingsFileController {
 
+    protected static String getSettingsFileName(){
+        return System.getProperty("user.home") + File.separator + "Brise" + File.separator + "settings.json";
+    }
+
+    private static void createDirectory(){
+        File directory = new File(System.getProperty("user.home") + File.separator + "Brise");
+        directory.mkdir();
+    }
+
 
     //Create Settings Json File
     public static void createSettingsFile(){
@@ -37,11 +46,14 @@ public class SettingsFileController {
         settings.put("key", key);
         settings.put("unit", unit);
         //Write JSON file
-        try (FileWriter file = new FileWriter("settings.json")) {
-            file.write(settings.toJSONString());
-            file.flush();
+        try (
+                FileWriter file = new FileWriter(getSettingsFileName())) {
+                file.write(settings.toJSONString());
+                file.flush();
         } catch (IOException e) {
-            e.printStackTrace();
+            // Will create the directory
+            createDirectory();
+            createSettingsFile();
         }
     }
 
@@ -78,7 +90,7 @@ public class SettingsFileController {
     public static Map<String, Map<String, String>> getAllSettings(){
         try {
             JSONParser parser = new JSONParser();
-            return (Map<String, Map<String, String>>) parser.parse(new FileReader("settings.json"));
+            return (Map<String, Map<String, String>>) parser.parse(new FileReader(getSettingsFileName()));
         } catch (FileNotFoundException e) {
             SettingsFileController.createSettingsFile();
             return getAllSettings();

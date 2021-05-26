@@ -12,6 +12,7 @@ import java.nio.file.NoSuchFileException;
 import java.util.Map;
 
 import static tech.weather.settings.SettingsExceptionHandler.parsingHandler;
+import static tech.weather.settings.SettingsFileController.getSettingsFileName;
 
 public class SettingsUnit {
 
@@ -21,7 +22,7 @@ public class SettingsUnit {
         try {
             // Fetch the settings saved
             JSONParser parser = new JSONParser();
-            JSONObject settings = (JSONObject) parser.parse(new FileReader("settings.json"));
+            JSONObject settings = (JSONObject) parser.parse(new FileReader(getSettingsFileName()));
             Map<String, String> unit = (Map<String, String>) settings.get("unit");
 
             switch (unitSystemChoosed){
@@ -50,7 +51,7 @@ public class SettingsUnit {
                     System.out.println("Error - Invalid Choice.");
             }
             settings.put("unit", unit);
-            FileWriter file = new FileWriter("settings.json");
+            FileWriter file = new FileWriter(getSettingsFileName());
             file.write(settings.toJSONString());
             file.flush();
         } catch (NoSuchFileException e){
@@ -66,7 +67,7 @@ public class SettingsUnit {
     protected static void modifyUnit(String unitSelected, String unitChosen){
         try {
             JSONParser parser = new JSONParser();
-            JSONObject settings = (JSONObject) parser.parse(new FileReader("settings.json"));
+            JSONObject settings = (JSONObject) parser.parse(new FileReader(getSettingsFileName()));
 
             Map<String, String> unit = (Map<String, String>) settings.get("unit");
             unit.put(unitSelected, unitChosen);
@@ -76,7 +77,7 @@ public class SettingsUnit {
             }
 
             settings.put("unit", unit);
-            FileWriter writer = new FileWriter("settings.json");
+            FileWriter writer = new FileWriter(getSettingsFileName());
             writer.write(settings.toJSONString());
             writer.flush();
         } catch (NoSuchFileException e){
@@ -93,7 +94,7 @@ public class SettingsUnit {
     public static String getUnit(String unitNeeded){
         try {
             JSONParser parser = new JSONParser();
-            JSONObject settings = (JSONObject) parser.parse(new FileReader("settings.json"));
+            JSONObject settings = (JSONObject) parser.parse(new FileReader(getSettingsFileName()));
             Map<String, String> unit = (Map<String, String>) settings.get("unit");
             String unitFetched = unit.get(unitNeeded);
             if (unitFetched.length() < 1){

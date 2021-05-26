@@ -13,13 +13,14 @@ import java.util.Map;
 import java.util.Scanner;
 
 import static tech.weather.settings.SettingsFileController.createSettingsFile;
+import static tech.weather.settings.SettingsFileController.getSettingsFileName;
 
 public class SettingsKey {
 
     public static String getOpenWeatherMapKey(){
         try {
             JSONParser parser = new JSONParser();
-            Map<String, Map<String, String>> settings = (Map<String, Map<String, String>>) parser.parse(new FileReader("settings.json"));
+            Map<String, Map<String, String>> settings = (Map<String, Map<String, String>>) parser.parse(new FileReader(getSettingsFileName()));
             Map<String, String> key = settings.get("key");
             String appId = key.get("openWeatherMap");
             if (appId.length() < 1){
@@ -47,13 +48,13 @@ public class SettingsKey {
 
         try {
             JSONParser parser = new JSONParser();
-            JSONObject settings = (JSONObject) parser.parse(new FileReader("settings.json"));
+            JSONObject settings = (JSONObject) parser.parse(new FileReader(getSettingsFileName()));
 
             Map<String,String> key = (Map<String, String>) settings.get("key");
             key.put("openWeatherMap", openWeatherMapKey);
 
             settings.put("key", key);
-            FileWriter file = new FileWriter("settings.json");
+            FileWriter file = new FileWriter(getSettingsFileName());
             file.write(settings.toJSONString());
             file.flush();
             return "Your key has been saved.";
