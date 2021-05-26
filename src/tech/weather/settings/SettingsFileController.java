@@ -61,7 +61,7 @@ public class SettingsFileController {
     public static void verificationUponStart(){
         try {
             JSONParser parser = new JSONParser();
-            JSONObject settings = (JSONObject) parser.parse(new FileReader("settings.json"));
+            JSONObject settings = (JSONObject) parser.parse(new FileReader(getSettingsFileName()));
             Map<String, String> key = (Map<String, String>) settings.get("key");
             if (key.get("openWeatherMap").equals("")){
                 System.out.println("No OpenWeatherMap appId Key has been saved.");

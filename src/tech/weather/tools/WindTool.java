@@ -5,22 +5,26 @@ import tech.weather.settings.SettingsUnit;
 
 public class WindTool {
 
+    private static boolean isInBetween(Double lowLimit, Double windDirection, Double highLimit){
+        return windDirection >= lowLimit && windDirection < highLimit;
+    }
+
     public static String getWindOrigin(Double windDirection) {
-        if (windDirection > 337.5 || windDirection < 22.5) {
+        if (isInBetween(337.5, windDirection, 360.1) || isInBetween(0.0, windDirection, 22.5)) {
             return "North";
-        } else if (windDirection >= 22.5 && windDirection < 67.5) {
+        } else if (isInBetween(22.5, windDirection, 67.5)) {
             return "North-West";
-        } else if (windDirection >= 65.5 && windDirection < 112.5) {
+        } else if (isInBetween(65.5, windDirection, 112.5)) {
             return "West";
-        } else if (windDirection >= 112.5 && windDirection < 157.5) {
+        } else if (isInBetween(112.5, windDirection, 157.5)) {
             return "South-West";
-        } else if (windDirection >= 157.5 && windDirection < 202.5) {
+        } else if (isInBetween(157.5, windDirection, 202.5)) {
             return "South";
-        } else if (windDirection >= 202.5 && windDirection < 247.5) {
+        } else if (isInBetween(202.5, windDirection, 247.5)) {
             return "South-East";
-        } else if (windDirection >= 247.5 && windDirection < 292.5) {
+        } else if (isInBetween(247.5, windDirection, 292.5)) {
             return "East";
-        } else if (windDirection >= 292.5 && windDirection < 337.5) {
+        } else if (isInBetween(292.5, windDirection, 337.5)) {
             return "North-East";
         } else {
             return "There's no wind";
@@ -32,17 +36,17 @@ public class WindTool {
 
         if (windDirection > 337.5 || windDirection < 22.5) {
             return windDirection + " N";
-        } else if (windDirection >= 22.5 && windDirection < 67.5) {
+        } else if (isInBetween(22.5, windDirection, 67.5)) {
             return windDirection + " NW";
-        } else if (windDirection >= 65.5 && windDirection < 112.5) {
+        } else if (isInBetween(65.5, windDirection, 112.5)) {
             return windDirection + " W";
-        } else if (windDirection >= 112.5 && windDirection < 157.5) {
+        } else if (isInBetween(112.5, windDirection, 157.5)) {
             return windDirection + " SW";
-        } else if (windDirection >= 157.5 && windDirection < 202.5) {
+        } else if (isInBetween(157.5, windDirection, 202.5)) {
             return windDirection + " S";
-        } else if (windDirection >= 202.5 && windDirection < 247.5) {
+        } else if (isInBetween(202.5, windDirection, 247.5)) {
             return windDirection + " SE";
-        } else if (windDirection >= 247.5 && windDirection < 292.5) {
+        } else if (isInBetween(247.5, windDirection, 292.5)) {
             return windDirection + " E";
         }  else {
             return windDirection + " NE";
