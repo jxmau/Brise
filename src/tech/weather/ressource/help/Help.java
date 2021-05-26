@@ -92,5 +92,20 @@ public class Help {
                 """;
     }
 
+    public static String unitHelp(){
+        return """
+                    > To update the Unit System :
+                imperial   -> Speed : mph | Temperature : °F | Precipitation : in | Air Pollution : μgm3
+                metric     -> Speed : kph | Temperature : °C | Precipitation : mm | Air Pollution : μgm3
+                scientific -> Speed : m/s | Temperature : °K | Precipitation : mm | Air Pollution : ppm
+                
+                    > To update a single unit :
+                temperature   -> celcius (°C) - farenheit (°F) - kelvin (°K)
+                speed         -> kph (kilometers per hour) - mph (miles per hour) - ms (meters per second)
+                precipitation -> metric (meter and millimeters) - imperial (foot and inches)
+                air           -> μgm3 (micrograms per cube meters) - ppm (parts per million)
+                """;
+    }
+
 
 }
